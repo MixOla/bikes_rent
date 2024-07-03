@@ -9,10 +9,10 @@ class UserCreateSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 	#хешируем пароль
-    def create(self, validated_data):
-        user = super().create(validated_data)
-
-        user.set_password(user.password)
-        user.save()
-
-        return user
+    # def create(self, validated_data):
+    #     user = super().create(validated_data)
+    #
+    #     user.set_password(user.password)
+    #     user.save()
+    #
+    #     return user

@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from authentication.models import User
+from bikes.models import Bike, Rental
+
+admin.site.register(Bike)
+admin.site.register(Rental)

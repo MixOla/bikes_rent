@@ -1,23 +1,21 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import serializers, status
 from rest_framework.permissions import IsAuthenticated
-from .models import Bike, Rental
-from .serializers import BikeSerializer, RentalSerializer
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from django.utils import timezone
 
-class AvailableBikesView(APIView):
-    def get(self, request):
-        bikes = Bike.objects.filter(is_available=True)
-        serializer = BikeSerializer(bikes, many=True)
-        return Response(serializer.data)
+from .models import Bike, Rental
+
+class BikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Bike
+        fields = '__all__'
 
 
-class AvailableBikesView(APIView):
-    def get(self, request):
-        bikes = Bike.objects.filter(is_available=True)
-        serializer = BikeSerializer(bikes, many=True)
-        return Response(serializer.data)
+class RentalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rental
+        fields = '__all__'
 
 class RentBikeView(APIView):
     permission_classes = [IsAuthenticated]
