@@ -6,20 +6,20 @@ from .models import Bike, Rental
 from .serializers import BikeSerializer, RentalSerializer
 from django.utils import timezone
 
-class AvailableBikesView(APIView):
-    def get(self, request):
-        bikes = Bike.objects.filter(is_available=True)
-        serializer = BikeSerializer(bikes, many=True)
-        return Response(serializer.data)
-
 
 class AvailableBikesView(APIView):
+    """ Класс получения списка велосипедов """
+
+
+
     def get(self, request):
         bikes = Bike.objects.filter(is_available=True)
         serializer = BikeSerializer(bikes, many=True)
         return Response(serializer.data)
 
 class RentBikeView(APIView):
+    """ Класс аренды велосипеда """
+
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
@@ -43,6 +43,7 @@ class RentBikeView(APIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class ReturnBikeView(APIView):
+    """ Класс возврата велосипеда """
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
@@ -66,10 +67,8 @@ class ReturnBikeView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 def calculate_cost(start_time, end_time):
-    # Реализовать логику расчета стоимости аренды
-    # Например, по часам или за весь период
-    # ...
-    return 0.00
+    total_cost = (end_time - start_time) * Rental.cost
+    return total_cost
 
 class RentalHistoryView(APIView):
     permission_classes = [IsAuthenticated]
